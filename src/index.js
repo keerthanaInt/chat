@@ -1,11 +1,11 @@
 
-import React from 'react';
+import React,{useEffect} from 'react';
 import {setCustomText} from 'react-native-global-props';
 import {Provider} from 'react-redux';
 import {NavigationContainer} from '@react-navigation/native';
-import {store} from './redux/store';
+import store, { persistor } from "./redux/store";
 import RootStack from './navigation/RootStack';
-
+import { PersistGate } from 'redux-persist/integration/react';
 const index = () => {
   const customTextProps = {
     style: {
@@ -20,9 +20,11 @@ const index = () => {
   }, []);
   return (
     <Provider store={store}>
-      <NavigationContainer>
-        <RootStack />
-      </NavigationContainer>
+      <PersistGate loading={null} persistor={persistor}>
+        <NavigationContainer>
+          <RootStack />
+        </NavigationContainer>
+      </PersistGate>
     </Provider>
   );
 };
